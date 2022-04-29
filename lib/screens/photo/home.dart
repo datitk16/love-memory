@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:love_memory/data/image.dart';
+import 'package:love_memory/screens/photo/screen_detail.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -31,6 +32,23 @@ class _HomePageState extends State<HomePage> {
             Padding(
               padding: const EdgeInsets.all(8),
               child: GestureDetector(
+                onHorizontalDragEnd: (dragEndDetails) {
+                  setState(() {
+                    if (dragEndDetails.primaryVelocity! < 0) {
+                      buildNextImage();
+                    } else if (dragEndDetails.primaryVelocity! > 0) {
+                      buildPreviousImage();
+                    }
+                  });
+                },
+                onTap: () {
+                  setState(() {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => DetailScreen()));
+                  });
+                },
                 child: Container(
                   decoration: BoxDecoration(
                     color: Colors.white,
