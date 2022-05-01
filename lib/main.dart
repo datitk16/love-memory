@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:love_memory/screens/login/login.dart';
 import 'package:love_memory/screens/photo/home.dart';
 
 void main() {
@@ -11,11 +12,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: HomePage(),
+      title: 'Love memory',
+      debugShowCheckedModeBanner: false,
+      home: LoginPage(),
     );
   }
 }
