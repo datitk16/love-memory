@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -72,7 +73,7 @@ class _LoginState extends State<LoginPage> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
-                              Icon(Icons.email_outlined),
+                              FaIcon(FontAwesomeIcons.envelope),
                               Expanded(
                                   child: Container(
                                 margin: const EdgeInsets.only(left: 10),
@@ -104,7 +105,7 @@ class _LoginState extends State<LoginPage> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
-                              Icon(Icons.email_outlined),
+                              FaIcon(FontAwesomeIcons.key),
                               Expanded(
                                   child: Container(
                                 margin: const EdgeInsets.only(left: 10),
@@ -151,23 +152,7 @@ class _LoginState extends State<LoginPage> {
                                           fontWeight: FontWeight.bold),
                                     ),
                                   ),
-                                ))
-                            // child: Container(
-                            //   alignment: Alignment.center,
-                            //   width: 200,
-                            //   height: 50,
-                            //   decoration: BoxDecoration(
-                            //       color: Colors.purpleAccent,
-                            //       borderRadius: BorderRadius.circular(20)),
-                            //   child: Text(
-                            //     'Submit',
-                            //     style: TextStyle(
-                            //         fontSize: 20,
-                            //         color: Colors.white,
-                            //         fontWeight: FontWeight.bold),
-                            //   ),
-                            // ),
-                            )
+                                )))
                       ],
                     ),
                   )
