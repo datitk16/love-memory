@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "655187545616",
+    "project_id": "memory-love-2b1db",
+    "storage_bucket": "memory-love-2b1db.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:655187545616:android:9940c20765d4c6cd06c495",
+        "android_client_info": {
+          "package_name": "com.example.love_memory"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "655187545616-60lnpskhsfa79o6b2flb4u6d56ttottq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD1gDKV2731Q4Vm0SPOP28aFodSUb3-i0Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "655187545616-60lnpskhsfa79o6b2flb4u6d56ttottq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
