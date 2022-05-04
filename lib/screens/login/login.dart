@@ -3,6 +3,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 
 import '../../auth/authentication_service.dart';
+import '../../share/dialogs.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -14,6 +15,7 @@ class _LoginState extends State<LoginPage> {
   final TextEditingController passwordController = TextEditingController();
   @override
   Widget build(BuildContext context) {
+    final overlay = LoadingOverlay.of(context);
     return Scaffold(
       body: Container(
         width: double.infinity,
@@ -32,7 +34,7 @@ class _LoginState extends State<LoginPage> {
                     fontWeight: FontWeight.bold,
                     color: Colors.white,
                     letterSpacing: 3),
-                child: Text('Memory love'),
+                child: Text('Memory Love'),
               ),
             ),
             Expanded(
@@ -146,6 +148,10 @@ class _LoginState extends State<LoginPage> {
                                             passwordController.text.trim(),
                                       );
                                 },
+                                // onPressed: () async {
+                                //   await overlay.during(Future.delayed(
+                                //       const Duration(seconds: 20)));
+                                // },
                                 child: Ink(
                                   decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(20),
