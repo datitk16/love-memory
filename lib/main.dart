@@ -3,6 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:love_memory/screens/login/login.dart';
 import 'package:love_memory/screens/photo/home.dart';
+import 'package:love_memory/screens/signout/signout.dart';
 import 'package:provider/provider.dart';
 
 import 'auth/authentication_service.dart';
@@ -55,8 +56,10 @@ class AuthenticationWrapper extends StatelessWidget {
     final firebaseUser = context.watch<User?>();
 
     if (firebaseUser != null) {
-      return HomePage();
+      print('login ok');
+      return SignOut();
     }
+    print('login wrong');
     return LoginPage();
   }
 }
