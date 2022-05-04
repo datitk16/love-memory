@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:provider/provider.dart';
+
+import '../../auth/authentication_service.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -7,6 +10,8 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginState extends State<LoginPage> {
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -78,6 +83,7 @@ class _LoginState extends State<LoginPage> {
                                   child: Container(
                                 margin: const EdgeInsets.only(left: 10),
                                 child: TextFormField(
+                                  controller: emailController,
                                   maxLines: 1,
                                   decoration: const InputDecoration(
                                     label: Text(" E-mail ..."),
@@ -110,6 +116,7 @@ class _LoginState extends State<LoginPage> {
                                   child: Container(
                                 margin: const EdgeInsets.only(left: 10),
                                 child: TextFormField(
+                                  controller: passwordController,
                                   maxLines: 1,
                                   decoration: const InputDecoration(
                                     label: Text("Password ..."),
@@ -132,7 +139,13 @@ class _LoginState extends State<LoginPage> {
                                     shape: RoundedRectangleBorder(
                                         borderRadius:
                                             BorderRadius.circular(20))),
-                                onPressed: () {},
+                                onPressed: () {
+                                  context.read<AuthenticationService>().signIn(
+                                        email: emailController.text.trim(),
+                                        password:
+                                            passwordController.text.trim(),
+                                      );
+                                },
                                 child: Ink(
                                   decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(20),
