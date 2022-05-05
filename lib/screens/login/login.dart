@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:love_memory/constants.dart';
+import 'package:love_memory/screens/sign_up/sign_up.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-import '../../auth/authentication_service.dart';
-import '../../share/dialogs.dart';
+import '../../components/dialogs.dart';
+import '../../service/authentication_service.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -11,19 +14,32 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginState extends State<LoginPage> {
-  final TextEditingController emailController = TextEditingController();
+  late TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
+  late String email;
+
+  void initState() {
+    super.initState();
+    getEmail();
+  }
+
+  setEmail() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString('username', 'test@gmail.com');
+  }
+
+  getEmail() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    emailController = TextEditingController(text: prefs.getString('username'));
+    print(emailController.text.trim());
+  }
+
   @override
   Widget build(BuildContext context) {
-    final overlay = LoadingOverlay.of(context);
     return Scaffold(
       body: Container(
         width: double.infinity,
-        decoration: BoxDecoration(
-            gradient: LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                colors: [Colors.purple.shade600, Colors.deepOrangeAccent])),
+        decoration: BoxDecoration(),
         child: Column(
           children: [
             Container(
@@ -32,17 +48,17 @@ class _LoginState extends State<LoginPage> {
                 style: TextStyle(
                     fontSize: 35,
                     fontWeight: FontWeight.bold,
-                    color: Colors.white,
+                    color: Colors.black,
                     letterSpacing: 3),
-                child: Text('Memory Love'),
+                child: Text(
+                  'Chat app for love',
+                  style: TextStyle(
+                      fontFamily: 'Lobster', color: Colors.deepPurpleAccent),
+                ),
               ),
             ),
             Expanded(
                 child: Container(
-              decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius:
-                      BorderRadius.vertical(top: Radius.circular(50))),
               child: SingleChildScrollView(
                 child: Column(children: [
                   const SizedBox(
@@ -68,12 +84,6 @@ class _LoginState extends State<LoginPage> {
                           padding: EdgeInsets.only(left: 5, right: 5),
                           decoration: BoxDecoration(
                               color: Colors.white,
-                              boxShadow: [
-                                BoxShadow(
-                                    color: Colors.purpleAccent,
-                                    blurRadius: 10,
-                                    offset: Offset(1, 1))
-                              ],
                               borderRadius: BorderRadius.circular(20),
                               border: Border.all(
                                   color: Colors.purpleAccent, width: 1)),
@@ -86,6 +96,7 @@ class _LoginState extends State<LoginPage> {
                                 margin: const EdgeInsets.only(left: 10),
                                 child: TextFormField(
                                   controller: emailController,
+                                  autofillHints: [AutofillHints.email],
                                   maxLines: 1,
                                   decoration: const InputDecoration(
                                     label: Text(" E-mail ..."),
@@ -101,12 +112,6 @@ class _LoginState extends State<LoginPage> {
                           padding: EdgeInsets.only(left: 5, right: 5),
                           decoration: BoxDecoration(
                               color: Colors.white,
-                              boxShadow: [
-                                BoxShadow(
-                                    color: Colors.purpleAccent,
-                                    blurRadius: 10,
-                                    offset: Offset(1, 1))
-                              ],
                               borderRadius: BorderRadius.circular(20),
                               border: Border.all(
                                   color: Colors.purpleAccent, width: 1)),
@@ -132,46 +137,59 @@ class _LoginState extends State<LoginPage> {
                         Container(
                             margin: EdgeInsets.only(top: 50),
                             alignment: Alignment.center,
-                            child: ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                    onPrimary: Colors.purpleAccent,
-                                    shadowColor: Colors.purpleAccent,
-                                    elevation: 18,
-                                    padding: EdgeInsets.zero,
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(20))),
-                                onPressed: () {
-                                  context.read<AuthenticationService>().signIn(
-                                        email: emailController.text.trim(),
-                                        password:
-                                            passwordController.text.trim(),
-                                      );
-                                },
-                                // onPressed: () async {
-                                //   await overlay.during(Future.delayed(
-                                //       const Duration(seconds: 20)));
-                                // },
-                                child: Ink(
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(20),
-                                      gradient: LinearGradient(colors: [
-                                        Colors.purpleAccent,
-                                        Colors.deepPurpleAccent
-                                      ])),
-                                  width: 200,
-                                  height: 50,
-                                  child: Container(
-                                    alignment: Alignment.center,
-                                    child: Text(
-                                      'Submit',
-                                      style: TextStyle(
-                                          fontSize: 20,
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                  ),
-                                )))
+                            child: Column(
+                              children: [
+                                ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                        onPrimary: Colors.purpleAccent,
+                                        shadowColor: Colors.purpleAccent,
+                                        elevation: 18,
+                                        padding: EdgeInsets.zero,
+                                        shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(20))),
+                                    onPressed: () {
+                                      setEmail();
+                                      context
+                                          .read<AuthenticationService>()
+                                          .signIn(
+                                            email: emailController.text.trim(),
+                                            password:
+                                                passwordController.text.trim(),
+                                          );
+                                    },
+                                    // onPressed: () async {
+                                    //   await overlay.during(Future.delayed(
+                                    //       const Duration(seconds: 20)));
+                                    // },
+                                    child: Ink(
+                                      decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(20),
+                                          gradient: LinearGradient(colors: [
+                                            Colors.purpleAccent,
+                                            Colors.deepPurpleAccent
+                                          ])),
+                                      width: 200,
+                                      height: 50,
+                                      child: Container(
+                                        alignment: Alignment.center,
+                                        child: Text(
+                                          'Submit',
+                                          style: TextStyle(
+                                              fontSize: 20,
+                                              color: Colors.white,
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                      ),
+                                    )),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                _forgotPassword(),
+                                _switchToSignupPage()
+                              ],
+                            ))
                       ],
                     ),
                   )
@@ -183,5 +201,44 @@ class _LoginState extends State<LoginPage> {
         ),
       ),
     );
+  }
+
+  Widget _forgotPassword() {
+    return Center(
+      child: Text(
+        'Forgot password?',
+        style: TextStyle(fontSize: 16.0, color: Colors.deepPurpleAccent),
+      ),
+    );
+  }
+
+  Widget _switchToSignupPage() {
+    return Padding(
+        padding: EdgeInsets.only(top: 70),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              'Don\'t have an account?',
+              style: TextStyle(
+                  color: Colors.deepPurpleAccent,
+                  fontStyle: FontStyle.italic,
+                  fontSize: 17.0),
+            ),
+            SizedBox(
+              width: 10,
+            ),
+            GestureDetector(
+              child: Text(
+                'Sign up',
+                style: TextStyle(color: Colors.deepPurpleAccent, fontSize: 18),
+              ),
+              onTap: () {
+                Navigator.pushReplacement(
+                    context, MaterialPageRoute(builder: (_) => SignUp()));
+              },
+            )
+          ],
+        ));
   }
 }

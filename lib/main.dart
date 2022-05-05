@@ -3,11 +3,8 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:love_memory/screens/login/login.dart';
 import 'package:love_memory/screens/messages/message_screen.dart';
-import 'package:love_memory/screens/photo/home.dart';
-import 'package:love_memory/screens/signout/signout.dart';
+import 'package:love_memory/service/authentication_service.dart';
 import 'package:provider/provider.dart';
-
-import 'auth/authentication_service.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -50,10 +47,8 @@ class AuthenticationWrapper extends StatelessWidget {
     final firebaseUser = context.watch<User?>();
 
     if (firebaseUser != null) {
-      print('login ok');
       return MessageScreen();
     }
-    print('login wrong');
     return LoginPage();
   }
 }

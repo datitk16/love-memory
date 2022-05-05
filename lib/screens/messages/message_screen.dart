@@ -2,8 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:love_memory/constants.dart';
 import 'package:love_memory/screens/messages/components/body.dart';
+import 'package:provider/provider.dart';
 
-class MessageScreen extends StatelessWidget {
+import '../../service/authentication_service.dart';
+
+class MessageScreen extends StatefulWidget {
+  @override
+  MessageScreen_State createState() => MessageScreen_State();
+}
+
+class MessageScreen_State extends State<MessageScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(appBar: appBar(), body: Body());
@@ -15,7 +23,9 @@ class MessageScreen extends StatelessWidget {
       leading: IconButton(
         icon: FaIcon(FontAwesomeIcons.angleLeft),
         iconSize: 20.0,
-        onPressed: () {},
+        onPressed: () {
+          context.read<AuthenticationService>().signOut();
+        },
       ),
       automaticallyImplyLeading: false,
       title: Row(
